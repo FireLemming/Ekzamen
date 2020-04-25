@@ -51,7 +51,7 @@ namespace src
                         errflagtemp = true;
                     }
                     if (temp > 150 || wet <= -150)
-                        Console.WriteLine("Введите значение влажности от 1 до 100%");
+                        Console.WriteLine("Введите значение температуры от -150 до 150");
                 }
                 while (temp > 150 || wet <= -150 || errflagtemp == true); 
                 Weather[i].temperature = temp;
@@ -87,7 +87,7 @@ namespace src
                         errflagpressure = true;
                     }
                     if (pressure <= 0 || pressure > 1000)
-                        Console.WriteLine("Введите значение влажности от 1 до 1000");
+                        Console.WriteLine("Введите значение давления от 1 до 1000");
 
 
                 } while (pressure <= 0 || pressure >1000|| errflagpressure == true) ;
@@ -105,10 +105,9 @@ namespace src
                 {
                     Console.WriteLine("Экземпляр №" + CountOut +" Температура: " + s.temperature + " Влажность: " + s.wet + "% Давление: " + s.pressure);
                     CountOut++;
+                    FileOut(Sort(Weather));
                 }
-            FileOut(Sort(Weather));
-
-                Console.ReadKey();
+            Console.ReadKey();
         }
 
         public static void FileOut(Indications[] Weather)
