@@ -10,27 +10,54 @@ namespace src
     {
         static void Main(string[] args)
         {
+            int EkzCount = 0;
+            double temp;
+            string MasOut;
+            int CountOut;
+            Console.WriteLine("Введите количество экземпляров показаний с датчиков погоды");
+            EkzCount = Convert.ToInt32(Console.ReadLine());
+            Indications[] IndMas = new Indications[EkzCount];
+            for(int i = 0; i<EkzCount; i++)//заполнение элементов массива
 
+            {
+                Console.WriteLine("Введите значение температуры для " + i + "-го экземпляра");
+                IndMas[i] =  new Indications();
+                IndMas[i].temperature = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine("Введите значение влажности для " + i + "-го экземпляра");
+                IndMas[i].wet = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Введите значение давления для " + i + "-го экземпляра");
+                IndMas[i].pressure = Convert.ToInt32(Console.ReadLine());
+            }
+            Console.WriteLine("Для вывода массива нажмите Y");
+            MasOut = Console.ReadLine().ToUpper();
+            if (MasOut == "Y")
+                foreach(var s in IndMas)//Вывод массива
+                {
+                    Console.WriteLine("Температура: " + s.temperature + " Влажность: " + s.wet + " Давление: " + s.pressure);
 
+                }
+                Console.ReadKey();
         }
     }
 
     class Indications
     {
-        public Indications()
-        {
-            temperature = 0;
-            wet = 0;
-            pressure = 0;
-
-        }
         public double temperature;
         public int wet;
         public int pressure;
 
-        public string DateReturn()
+        public Indications(double Temperature, int Wet, int Pressure)
         {
-            return  "Темература:" + temperature.ToString() + "\n Влажность:" + wet.ToString() + "\n Давление:" + pressure.ToString();
+            temperature = Temperature;
+            wet = Wet;
+            pressure = Pressure;
+
         }
+        public Indications()
+        {
+
+
+        }
+
     }
 }
