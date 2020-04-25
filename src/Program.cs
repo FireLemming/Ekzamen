@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace src
 {
@@ -13,32 +14,66 @@ namespace src
             int EkzCount = 0;
             double temp;
             string MasOut;
-            int CountOut;
+            int CountOut = 1;
             Console.WriteLine("Введите количество экземпляров показаний с датчиков погоды");
             EkzCount = Convert.ToInt32(Console.ReadLine());
-            Indications[] IndMas = new Indications[EkzCount];
-            for(int i = 0; i<EkzCount; i++)//заполнение элементов массива
+            Indications[] Weather = new Indications[EkzCount];
 
+            for(int i = 0; i<EkzCount; i++)//заполнение элементов массива
             {
                 Console.WriteLine("Введите значение температуры для " + i + "-го экземпляра");
-                IndMas[i] =  new Indications();
-                IndMas[i].temperature = Convert.ToDouble(Console.ReadLine());
+                Weather[i] =  new Indications();
+                Weather[i].temperature = Convert.ToDouble(Console.ReadLine());
                 Console.WriteLine("Введите значение влажности для " + i + "-го экземпляра");
-                IndMas[i].wet = Convert.ToInt32(Console.ReadLine());
+                Weather[i].wet = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Введите значение давления для " + i + "-го экземпляра");
-                IndMas[i].pressure = Convert.ToInt32(Console.ReadLine());
+                Weather[i].pressure = Convert.ToInt32(Console.ReadLine());
             }
-            Console.WriteLine("Для вывода массива нажмите Y");
-            MasOut = Console.ReadLine().ToUpper();
-            if (MasOut == "Y")
-                foreach(var s in IndMas)//Вывод массива
-                {
-                    Console.WriteLine("Температура: " + s.temperature + " Влажность: " + s.wet + " Давление: " + s.pressure);
 
+            Console.WriteLine("Для вывода массива нажмите Y, иначе - закрытие программы");
+            MasOut = Console.ReadLine().ToUpper();
+
+            if (MasOut == "Y")
+                foreach(var s in Weather)//Вывод массива
+                {
+                    Console.WriteLine("Экземпляр №" + CountOut +" Температура: " + s.temperature + " Влажность: " + s.wet + " Давление: " + s.pressure);
+                    CountOut++;
                 }
+            FileOut(Weather);
+
                 Console.ReadKey();
         }
+
+        public static void FileOut(Indications[] Weather)
+        {
+            int CountOutFile = 1;
+            using (StreamWriter Write = new StreamWriter("Weater.txt"))
+            {
+                foreach (var s in Weather)
+                {
+                    Write.WriteLine("Экземпляр №" + CountOutFile + " Температура: " + s.temperature + " Влажность: " + s.wet + " Давление: " + s.pressure);
+                    CountOutFile++;
+                }
+
+            }
+        }
     }
+
+        //public void Read()
+
+        //{
+
+        //    file = File.ReadAllLines(Way, System.Text.Encoding.Default);
+
+        //    for (int i = 0; i < file.Length; i++)
+
+        //    {
+
+        //        Console.WriteLine(file[i]);
+
+        //    }
+
+        //}
 
     class Indications
     {
