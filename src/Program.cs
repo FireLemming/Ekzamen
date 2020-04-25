@@ -53,7 +53,7 @@ namespace src
                     if (temp > 150 || wet <= -150)
                         Console.WriteLine("Введите значение влажности от 1 до 100%");
                 }
-                while (temp > 150 || wet <= -150 || errflagtemp == true); // && wet.ToString().AsEnumerable().Any(s => char.IsLetter(s))
+                while (temp > 150 || wet <= -150 || errflagtemp == true); 
                 Weather[i].temperature = temp;
 
                 do
@@ -70,7 +70,7 @@ namespace src
                     if(wet>100 || wet <=0)
                         Console.WriteLine("Введите значение влажности от 1 до 100%");
                 } 
-                while (wet > 100 || wet <= 0 || errflagwet == true); // && wet.ToString().AsEnumerable().Any(s => char.IsLetter(s))
+                while (wet > 100 || wet <= 0 || errflagwet == true);
                 Weather[i].wet = wet;
 
                 do
@@ -95,17 +95,18 @@ namespace src
                 Weather[i].pressure = pressure;
             }
 
-            Console.WriteLine("Для вывода массива нажмите Y, иначе - закрытие программы");
+
+            Console.WriteLine("Для вывода массива в консоль и файл нажмите Y, иначе - закрытие программы");
             MasOut = Console.ReadLine().ToUpper();
 
 
             if (MasOut == "Y" || MasOut == "Н")
-                foreach(var s in Weather)//Вывод массива
+                foreach(var s in Sort(Weather))//Вывод массива
                 {
                     Console.WriteLine("Экземпляр №" + CountOut +" Температура: " + s.temperature + " Влажность: " + s.wet + "% Давление: " + s.pressure);
                     CountOut++;
                 }
-            FileOut(Weather);
+            FileOut(Sort(Weather));
 
                 Console.ReadKey();
         }
@@ -124,7 +125,12 @@ namespace src
             }
         }
 
-        
+        public static Indications[] Sort(Indications[] Weather)
+        {
+            Indications[] WeatherSort = Weather.AsQueryable<Indications>().OrderByDescending(s => s.temperature).ThenBy(s => s.wet).ToArray();
+            return WeatherSort;
+        }
+
     }
 
     class Indications
